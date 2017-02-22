@@ -114,11 +114,14 @@ def search(raw_query, query_type='/geonames/all'):
     if query_type_meta == []:
         query_type_meta = default_query
     query_index = query_type_meta[0]['index']
+    parameters = ''
+    if 'GEONAMES_PARAMETERS' in app.config:
+        parameters += '&' + '&'.join(app.config['GEONAMES_PARAMETERS'])
     try:
         if PY3:
-            url = api_base_url + query_index  + '=' + urllib.parse.quote(query)
+            url = api_base_url + query_index  + '=' + urllib.parse.quote(query) + parameters
         else:
-            url = api_base_url + query_index  + '=' + urllib.quote(query)
+            url = api_base_url + query_index  + '=' + urllib.quote(query) + parameters
         app.logger.debug("GeoNames API url is " + url)
         resp = requests.get(url)
         results = resp.json()
@@ -189,6 +192,9 @@ if __name__ == '__main__':
     from optparse import OptionParser
     oparser = OptionParser()
     oparser.add_option('-d', '--debug', action='store_true', default=False)
+    oparser.add_option('-p', '--parameters', action='store_true', default=False)
     opts, args = oparser.parse_args()
     app.debug = opts.debug
+    if opts.parameters:
+        app.config['GEONAMES_PARAMETERS'] = args
     app.run(host='0.0.0.0')

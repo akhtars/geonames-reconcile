@@ -1,3 +1,26 @@
+This repository is a fork of [Christina Harlow's superb GeoNames OpenRefine reconciliation service](https://github.com/cmh2166/geonames-reconcile/). Original README copied below. Changes are documented here.
+
+_Support for specifying additional GeoNames query parameters as arguments on the command line when starting `reconcile.py`._
+
+These parameters will persist through the session, and may be helpful if you are trying to improve precision when reconciling a bunch of terms that share characteristics. For example, to start the service and limit search to features defined as populated places or seats of a first-order administrative division, within New Hampshire, and with a population above 5000:
+
+```
+python reconcile.py --debug --parameters featureCode=PPL featureCode=PPLA adminCode1=NH cities=cities5000
+```
+
+These parameters will be visible as part of the URL displayed in debug mode:
+
+```
+DEBUG in reconcile [reconcile.py:126]:
+GeoNames API url is http://api.geonames.org/searchJSON?username=username&isNameRequired=yes&q=concord%20%2C%20new%20hampshire&featureCode=PPL&featureCode=PPLA&adminCode1=NH&cities=cities5000
+```
+
+See the [GeoNames Search Webservice documentation](http://www.geonames.org/export/geonames-search.html) for information on available parameters. Choosing your index should continue to be done within the "Start reconciling..." browser interface.
+
+There may be much better ways to do the above. Suggestions, questions, and comments welcome at <shaun.y.akhtar@dartmouth.edu>.
+
+***
+
 ##About
 
 An OpenRefine reconciliation service for [GeoNames](http://www.geonames.org/).
@@ -76,4 +99,3 @@ I'd like to expand the extremely rudimentary but gets the job done LoC geographi
 I'd also like to build in a way to use other columns as additional search properties.
 
 Finally, finding a better way to handling the API username updates as well as parsing name plus coordinates (instead of the hack I've put into this for the time being) would be great.
-
