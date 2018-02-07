@@ -13,7 +13,6 @@ from operator import itemgetter
 import urllib
 from fuzzywuzzy import fuzz
 import requests
-from sys import argv
 from sys import version_info
 
 app = Flask(__name__)
@@ -168,7 +167,7 @@ def search(raw_query, query_type='/geonames/all'):
     return sorted_out[:3]
 
 
-@app.route("/reconcile", methods=['POST', 'GET'])
+@app.route("/", methods=['POST', 'GET'])
 def reconcile():
     # If a 'queries' parameter is supplied then it is a dictionary
     # of (key, query) pairs representing a batch of queries. We
